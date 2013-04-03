@@ -5,10 +5,15 @@ var config = {
     channels: ["#caniskipcs463tmr"],
     server: "irc.freenode.net",
     botName: "caniskipcs463tmr"
+    password: "password"
 };
 var bot = new irc.Client(config.server, config.botName, {
     channels: config.channels
 });
+
+
+bot.say('NickServ', 'identify ' + config.password);
+bot.say('ChanServ', 'invite ' + config.channels[0]);
 
 
 bot.addListener("message", function(from, to, text, message) {
