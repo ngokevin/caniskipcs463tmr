@@ -17,11 +17,17 @@ bot.addListener('error', function(message) {
 
 bot.addListener('registered', function(message) {
     console.log('Identifying and inviting.');
-    bot.send('/msg nickserv identify ' + config.password);
-    bot.send('/msg chanserv invite ' + config.channel);
+        bot.send('/msg nickserv identify ' + config.password);
+    setTimeout(function() {
+        bot.send('/msg chanserv invite ' + config.channel);
+    }, 5000);
     setTimeout(function() {
         bot.join(config.channel);
-    }, 20000);
+    }, 10000);
+});
+
+bot.addListener('pm', function(nick, text, message) {
+    console.log(text);
 });
 
 bot.addListener('message', function(from, to, text, message) {
@@ -36,7 +42,7 @@ bot.addListener('message', function(from, to, text, message) {
     if (text.indexOf('caniskipcs463tmr') !== -1) {
         var currentDate = calcTime(-7);  // Pacific Daylight Time.
 
-        if ([1, 3].indexOf(currentDate.getDay()) === -1) {
+        if ([0, 2].indexOf(currentDate.getDay()) === -1) {
             bot.say(config.channel, "Son be trippin'. You don't have CS463 tomorrow.");
             return;
         }
